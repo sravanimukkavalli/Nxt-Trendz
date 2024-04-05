@@ -136,9 +136,7 @@ class Cart extends Component {
                         >
                           {close => (
                             <div className="cart-popup-container">
-                              <button type="button" onClick={() => close()}>
-                                <IoMdCloseCircleOutline aria-label="button" />
-                              </button>
+                              
                               {isOrderPlaced ? (
                                 <>
                                   <p className="cart-heading">
@@ -156,86 +154,91 @@ class Cart extends Component {
                                   </Link>
                                 </>
                               ) : (
-                                <form
-                                  className="cart-form-container"
-                                  onSubmit={this.onSubmitForm}
-                                >
-                                  <label className="input-label" htmlFor="name">
-                                    Name
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="name"
-                                    className="username-input-field"
-                                    placeholder="Name"
-                                    value={name}
-                                    onChange={this.onChangeName}
-                                  />
-                                  <label
-                                    className="input-label"
-                                    htmlFor="address"
-                                  >
-                                    Address
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="address"
-                                    className="username-input-field"
-                                    placeholder="Address"
-                                    value={address}
-                                    onChange={this.onChangeAdress}
-                                  />
-                                  <label className="input-label" htmlFor="city">
-                                    City
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="city"
-                                    className="username-input-field"
-                                    placeholder="City"
-                                    value={city}
-                                    onChange={this.onChangeCity}
-                                  />
-                                  <label
-                                    className="input-label"
-                                    htmlFor="state"
-                                  >
-                                    State , pincode
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="state"
-                                    className="username-input-field"
-                                    placeholder="State"
-                                    value={state}
-                                    onChange={this.onChangeState}
-                                  />
-                                  <label
-                                    className="input-label"
-                                    htmlFor="number"
-                                  >
-                                    Phone Number
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="number"
-                                    className="username-input-field"
-                                    placeholder="Phone Number"
-                                    value={phoneNumber}
-                                    onChange={this.onChangePhoneNumber}
-                                  />
-                                  <button
-                                    type="submit"
-                                    className="checkout-btn"
-                                  >
-                                    Place Order
+                                <>
+                                    <button type="button" onClick={() => close()}>
+                                    <IoMdCloseCircleOutline aria-label="button" />
                                   </button>
-                                  {isError && (
-                                    <p className="error-message">
-                                      {errorMsgText}
-                                    </p>
-                                  )}
-                                </form>
+                                    <form
+                                      className="cart-form-container"
+                                      onSubmit={this.onSubmitForm}
+                                    >
+                                      <label className="input-label" htmlFor="name">
+                                        Name
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="name"
+                                        className="username-input-field"
+                                        placeholder="Name"
+                                        value={name}
+                                        onChange={this.onChangeName}
+                                      />
+                                      <label
+                                        className="input-label"
+                                        htmlFor="address"
+                                      >
+                                        Address
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="address"
+                                        className="username-input-field"
+                                        placeholder="Address"
+                                        value={address}
+                                        onChange={this.onChangeAdress}
+                                      />
+                                      <label className="input-label" htmlFor="city">
+                                        City
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="city"
+                                        className="username-input-field"
+                                        placeholder="City"
+                                        value={city}
+                                        onChange={this.onChangeCity}
+                                      />
+                                      <label
+                                        className="input-label"
+                                        htmlFor="state"
+                                      >
+                                        State , pincode
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="state"
+                                        className="username-input-field"
+                                        placeholder="State"
+                                        value={state}
+                                        onChange={this.onChangeState}
+                                      />
+                                      <label
+                                        className="input-label"
+                                        htmlFor="number"
+                                      >
+                                        Phone Number
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="number"
+                                        className="username-input-field"
+                                        placeholder="Phone Number"
+                                        value={phoneNumber}
+                                        onChange={this.onChangePhoneNumber}
+                                      />
+                                      <button
+                                        type="submit"
+                                        className="checkout-btn"
+                                      >
+                                        Place Order
+                                      </button>
+                                      {isError && (
+                                        <p className="error-message">
+                                          {errorMsgText}
+                                        </p>
+                                      )}
+                                    </form>
+                                  </>
                               )}
                             </div>
                           )}
