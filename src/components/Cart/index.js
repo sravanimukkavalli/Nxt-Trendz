@@ -1,7 +1,5 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import Popup from 'reactjs-popup'
-import {IoMdCloseCircleOutline} from 'react-icons/io'
 import Header from '../Header'
 import CartListView from '../CartListView'
 
@@ -12,66 +10,25 @@ import './index.css'
 
 class Cart extends Component {
   state = {
-    name: '',
-    address: '',
-    state: '',
-    city: '',
-    phoneNumber: '',
-    isOrderPlaced: false,
-    isError: false,
-    errorMsgText: '',
+    selectedPaymentMethod: '',
+    isOrderConfirmed: false,
   }
 
-  onChangeName = event => {
-    this.setState({name: event.target.value})
+  setSelectedPaymentMethod = event => {
+    this.setState({selectedPaymentMethod: event.target.value})
   }
 
-  onChangeAdress = event => {
-    this.setState({address: event.target.value})
-  }
-
-  onChangeState = event => {
-    this.setState({state: event.target.value})
-  }
-
-  onChangeCity = event => {
-    this.setState({city: event.target.value})
-  }
-
-  onChangePhoneNumber = event => {
-    this.setState({phoneNumber: event.target.value})
-  }
-
-  onSubmitForm = event => {
-    event.preventDefault()
-    const {state, address, city, name, phoneNumber} = this.state
-    if (
-      state !== '' &&
-      address !== '' &&
-      city !== '' &&
-      name !== '' &&
-      phoneNumber !== ''
-    ) {
-      this.setState({isOrderPlaced: true, isError: false})
-    } else {
-      this.setState({
-        isError: true,
-        errorMsgText: 'Please fill out the details',
-      })
-    }
+  handleConfirmOrder = () => {
+    const {selectedPaymentMethod} = this.state
+    if (selectedPaymentMethod === 'Cash on Delivery')
+      this.setState({isOrderConfirmed: true})
+    // } else {
+    //   // Handle other payment methods
+    // }
   }
 
   render() {
-    const {
-      isOrderPlaced,
-      state,
-      city,
-      phoneNumber,
-      name,
-      address,
-      isError,
-      errorMsgText,
-    } = this.state
+    const {selectedPaymentMethod, isOrderConfirmed} = this.state
     return (
       <CartContext.Consumer>
         {value => {
@@ -83,6 +40,12 @@ class Cart extends Component {
             removeAllCartItems()
           }
 
+          const onClickContinueShopping = () => {
+            removeAllCartItems()
+            const {history} = this.props
+            history.replace('/products')
+          }
+
           const renderAmount = () => {
             let amount = 0
             cartList.forEach(each => {
@@ -90,10 +53,6 @@ class Cart extends Component {
               amount += quantity * price
             })
             return amount
-          }
-
-          const onClickShopping = () => {
-            removeAllCartItems()
           }
 
           return (
@@ -128,118 +87,99 @@ class Cart extends Component {
                         </div>
                         <Popup
                           modal
+                          closeOnDocumentClick
+                          closeOnEscape
                           trigger={
                             <button type="button" className="checkout-btn">
                               Checkout
                             </button>
                           }
                         >
-                          {close => (
-                            <div className="cart-popup-container">
-                              
-                              {isOrderPlaced ? (
-                                <>
-                                  <p className="cart-heading">
-                                    Your Order is Placed
-                                  </p>
-                                  <Link to="/products">
-                                    <button
-                                      style={{alignSelf: 'flex-end'}}
-                                      type="button"
-                                      className="checkout-btn"
-                                      onClick={onClickShopping}
-                                    >
-                                      Continue Shopping
-                                    </button>
-                                  </Link>
-                                </>
-                              ) : (
-                                <>
-                                    <button type="button" onClick={() => close()}>
-                                    <IoMdCloseCircleOutline aria-label="button" />
-                                  </button>
-                                    <form
-                                      className="cart-form-container"
-                                      onSubmit={this.onSubmitForm}
-                                    >
-                                      <label className="input-label" htmlFor="name">
-                                        Name
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="name"
-                                        className="username-input-field"
-                                        placeholder="Name"
-                                        value={name}
-                                        onChange={this.onChangeName}
-                                      />
-                                      <label
-                                        className="input-label"
-                                        htmlFor="address"
-                                      >
-                                        Address
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="address"
-                                        className="username-input-field"
-                                        placeholder="Address"
-                                        value={address}
-                                        onChange={this.onChangeAdress}
-                                      />
-                                      <label className="input-label" htmlFor="city">
-                                        City
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="city"
-                                        className="username-input-field"
-                                        placeholder="City"
-                                        value={city}
-                                        onChange={this.onChangeCity}
-                                      />
-                                      <label
-                                        className="input-label"
-                                        htmlFor="state"
-                                      >
-                                        State , pincode
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="state"
-                                        className="username-input-field"
-                                        placeholder="State"
-                                        value={state}
-                                        onChange={this.onChangeState}
-                                      />
-                                      <label
-                                        className="input-label"
-                                        htmlFor="number"
-                                      >
-                                        Phone Number
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="number"
-                                        className="username-input-field"
-                                        placeholder="Phone Number"
-                                        value={phoneNumber}
-                                        onChange={this.onChangePhoneNumber}
-                                      />
-                                      <button
-                                        type="submit"
-                                        className="checkout-btn"
-                                      >
-                                        Place Order
-                                      </button>
-                                      {isError && (
-                                        <p className="error-message">
-                                          {errorMsgText}
-                                        </p>
-                                      )}
-                                    </form>
-                                  </>
-                              )}
+                          {isOrderConfirmed ? (
+                            <div className="payment-popup">
+                              <p>Your order has been placed successfully</p>
+                              <button
+                                type="button"
+                                onClick={onClickContinueShopping}
+                              >
+                                Continue Shopping
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="payment-popup">
+                              <h2>Select Payment Method</h2>
+                              <div>
+                                <label htmlFor="card">
+                                  <input
+                                    id="card"
+                                    type="radio"
+                                    value="Card"
+                                    disabled
+                                    checked={selectedPaymentMethod === 'Card'}
+                                    onChange={this.setSelectedPaymentMethod}
+                                  />
+                                  Card
+                                </label>
+                                <label htmlFor="netbanking">
+                                  <input
+                                    id="netbanking"
+                                    type="radio"
+                                    value="Net Banking"
+                                    disabled
+                                    checked={
+                                      selectedPaymentMethod === 'Net Banking'
+                                    }
+                                    onChange={this.setSelectedPaymentMethod}
+                                  />
+                                  Net Banking
+                                </label>
+                                <label htmlFor="upi">
+                                  <input
+                                    id="upi"
+                                    type="radio"
+                                    value="UPI"
+                                    disabled
+                                    checked={selectedPaymentMethod === 'UPI'}
+                                    onChange={this.setSelectedPaymentMethod}
+                                  />
+                                  UPI
+                                </label>
+                                <label htmlFor="wallet">
+                                  <input
+                                    id="wallet"
+                                    type="radio"
+                                    value="Wallet"
+                                    disabled
+                                    checked={selectedPaymentMethod === 'Wallet'}
+                                    onChange={this.setSelectedPaymentMethod}
+                                  />
+                                  Wallet
+                                </label>
+                                <label htmlFor="cashondelivery">
+                                  <input
+                                    id="cashondelivery"
+                                    type="radio"
+                                    value="Cash on Delivery"
+                                    checked={
+                                      selectedPaymentMethod ===
+                                      'Cash on Delivery'
+                                    }
+                                    onChange={this.setSelectedPaymentMethod}
+                                  />
+                                  Cash on Delivery
+                                </label>
+                              </div>
+                              <div>
+                                <p>Number of items: {cartList.length}</p>
+                                <p>Total Price: {renderAmount()}</p>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={this.handleConfirmOrder}
+                                disabled={!selectedPaymentMethod}
+                              >
+                                Confirm Order
+                              </button>
                             </div>
                           )}
                         </Popup>
