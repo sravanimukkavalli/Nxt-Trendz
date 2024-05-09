@@ -153,3 +153,41 @@
   line-height: 16px;
   color: #ff0b37;
 }
+
+.payment-popup {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.payment-popup h2 {
+  margin-top: 0;
+}
+
+.payment-popup div {
+  margin-bottom: 20px;
+}
+
+.payment-popup label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.payment-popup button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-popup button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
