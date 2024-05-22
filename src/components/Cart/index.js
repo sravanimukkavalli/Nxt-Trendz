@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Popup from 'reactjs-popup'
+import {TiDeleteOutline} from 'react-icons/ti'
 import Header from '../Header'
 import CartListView from '../CartListView'
 
@@ -95,92 +96,104 @@ class Cart extends Component {
                             </button>
                           }
                         >
-                          {isOrderConfirmed ? (
-                            <div className="payment-popup">
-                              <p>Your order has been placed successfully</p>
-                              <button
-                                type="button"
-                                onClick={onClickContinueShopping}
-                              >
-                                Continue Shopping
-                              </button>
-                            </div>
-                          ) : (
-                            <div className="payment-popup">
-                              <h2>Select Payment Method</h2>
-                              <div>
-                                <label htmlFor="card">
-                                  <input
-                                    id="card"
-                                    type="radio"
-                                    value="Card"
-                                    disabled
-                                    checked={selectedPaymentMethod === 'Card'}
-                                    onChange={this.setSelectedPaymentMethod}
-                                  />
-                                  Card
-                                </label>
-                                <label htmlFor="netbanking">
-                                  <input
-                                    id="netbanking"
-                                    type="radio"
-                                    value="Net Banking"
-                                    disabled
-                                    checked={
-                                      selectedPaymentMethod === 'Net Banking'
-                                    }
-                                    onChange={this.setSelectedPaymentMethod}
-                                  />
-                                  Net Banking
-                                </label>
-                                <label htmlFor="upi">
-                                  <input
-                                    id="upi"
-                                    type="radio"
-                                    value="UPI"
-                                    disabled
-                                    checked={selectedPaymentMethod === 'UPI'}
-                                    onChange={this.setSelectedPaymentMethod}
-                                  />
-                                  UPI
-                                </label>
-                                <label htmlFor="wallet">
-                                  <input
-                                    id="wallet"
-                                    type="radio"
-                                    value="Wallet"
-                                    disabled
-                                    checked={selectedPaymentMethod === 'Wallet'}
-                                    onChange={this.setSelectedPaymentMethod}
-                                  />
-                                  Wallet
-                                </label>
-                                <label htmlFor="cashondelivery">
-                                  <input
-                                    id="cashondelivery"
-                                    type="radio"
-                                    value="Cash on Delivery"
-                                    checked={
-                                      selectedPaymentMethod ===
-                                      'Cash on Delivery'
-                                    }
-                                    onChange={this.setSelectedPaymentMethod}
-                                  />
-                                  Cash on Delivery
-                                </label>
-                              </div>
-                              <div>
-                                <p>Number of items: {cartList.length}</p>
-                                <p>Total Price: {renderAmount()}</p>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={this.handleConfirmOrder}
-                                disabled={!selectedPaymentMethod}
-                              >
-                                Confirm Order
-                              </button>
-                            </div>
+                          {close => (
+                            <>
+                              {isOrderConfirmed ? (
+                                <div className="payment-popup">
+                                  <TiDeleteOutline onClick={() => close()} />
+                                  <p>Your order has been placed successfully</p>
+                                  <button
+                                    type="button"
+                                    onClick={onClickContinueShopping}
+                                  >
+                                    Continue Shopping
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="payment-popup">
+                                  <h2>Select Payment Method</h2>
+                                  <div>
+                                    <label htmlFor="card">
+                                      <input
+                                        id="card"
+                                        type="radio"
+                                        value="Card"
+                                        disabled
+                                        checked={
+                                          selectedPaymentMethod === 'Card'
+                                        }
+                                        onChange={this.setSelectedPaymentMethod}
+                                      />
+                                      Card
+                                    </label>
+                                    <label htmlFor="netbanking">
+                                      <input
+                                        id="netbanking"
+                                        type="radio"
+                                        value="Net Banking"
+                                        disabled
+                                        checked={
+                                          selectedPaymentMethod ===
+                                          'Net Banking'
+                                        }
+                                        onChange={this.setSelectedPaymentMethod}
+                                      />
+                                      Net Banking
+                                    </label>
+                                    <label htmlFor="upi">
+                                      <input
+                                        id="upi"
+                                        type="radio"
+                                        value="UPI"
+                                        disabled
+                                        checked={
+                                          selectedPaymentMethod === 'UPI'
+                                        }
+                                        onChange={this.setSelectedPaymentMethod}
+                                      />
+                                      UPI
+                                    </label>
+                                    <label htmlFor="wallet">
+                                      <input
+                                        id="wallet"
+                                        type="radio"
+                                        value="Wallet"
+                                        disabled
+                                        checked={
+                                          selectedPaymentMethod === 'Wallet'
+                                        }
+                                        onChange={this.setSelectedPaymentMethod}
+                                      />
+                                      Wallet
+                                    </label>
+                                    <label htmlFor="cashondelivery">
+                                      <input
+                                        id="cashondelivery"
+                                        type="radio"
+                                        value="Cash on Delivery"
+                                        checked={
+                                          selectedPaymentMethod ===
+                                          'Cash on Delivery'
+                                        }
+                                        onChange={this.setSelectedPaymentMethod}
+                                      />
+                                      Cash on Delivery
+                                    </label>
+                                  </div>
+                                  <div>
+                                    <p>Number of items: {cartList.length}</p>
+                                    <p>Total Price: {renderAmount()}</p>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={this.handleConfirmOrder}
+                                    disabled={!selectedPaymentMethod}
+                                  >
+                                    Confirm Order
+                                  </button>
+                                </div>
+                              )}
+                            </>
                           )}
                         </Popup>
                       </div>
